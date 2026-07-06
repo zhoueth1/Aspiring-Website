@@ -1,0 +1,304 @@
+:root {
+  --page-bg: #170f12;
+  --page-ink: #fff8ed;
+  --panel: rgba(255, 248, 237, 0.92);
+  --panel-ink: #1a2028;
+  --copper: #d18436;
+  --steel: #7d8794;
+  --water: #56bed6;
+  --thermal-mix: 0;
+  --stage-glow: rgba(255, 117, 32, 0.22);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--page-bg);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  min-width: 320px;
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #170f12 calc((1 - var(--thermal-mix)) * 100%), #d9f6ff calc(var(--thermal-mix) * 100%)) 0%,
+      color-mix(in srgb, #2a1713 calc((1 - var(--thermal-mix)) * 100%), #edf7f6 calc(var(--thermal-mix) * 100%)) 55%,
+      color-mix(in srgb, #10161d calc((1 - var(--thermal-mix)) * 100%), #e8eef1 calc(var(--thermal-mix) * 100%)) 100%
+    );
+  color: var(--page-ink);
+  overflow-x: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.scroll-track {
+  height: 780vh;
+  position: relative;
+}
+
+.stage {
+  background:
+    linear-gradient(180deg, rgba(255, 146, 54, 0.14), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.08));
+  height: 100vh;
+  inset: 0;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+}
+
+.stage::before {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 84px 84px;
+  content: "";
+  inset: 0;
+  opacity: calc(0.12 + var(--thermal-mix) * 0.2);
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.stage::after {
+  background:
+    linear-gradient(180deg, transparent, rgba(8, 12, 17, 0.7)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.35), transparent 24%, transparent 76%, rgba(0, 0, 0, 0.34));
+  content: "";
+  inset: 0;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  position: absolute;
+  z-index: 4;
+}
+
+#flowCanvas {
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.caster-svg {
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}
+
+.hero-copy {
+  left: max(1.25rem, 6vw);
+  max-width: 40rem;
+  position: absolute;
+  top: max(1.5rem, 4vh);
+  z-index: 5;
+}
+
+.hero-title {
+  color: #fff6e9;
+  font-size: 4rem;
+  font-weight: 860;
+  letter-spacing: 0;
+  line-height: 0.92;
+  margin: 0;
+  text-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+}
+
+.hero-kicker {
+  color: rgba(255, 248, 237, 0.78);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin: 1rem 0 0;
+  max-width: 30rem;
+  text-transform: uppercase;
+}
+
+.team-strip {
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 6;
+}
+
+.team-card {
+  align-items: start;
+  background: var(--panel);
+  border: 1px solid rgba(20, 32, 42, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 24px 70px rgba(8, 16, 24, 0.26);
+  color: var(--panel-ink);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  max-width: min(36rem, calc(100vw - 2rem));
+  min-height: 11rem;
+  opacity: 0;
+  padding: 1rem;
+  position: absolute;
+  right: max(1rem, 7vw);
+  top: max(6.5rem, 18vh);
+  width: 36rem;
+}
+
+.team-card svg {
+  border-radius: 8px;
+  display: block;
+  height: 6rem;
+  overflow: hidden;
+  width: 6rem;
+}
+
+.team-card__role {
+  color: #0f6474;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin: 0 0 0.25rem;
+  text-transform: uppercase;
+}
+
+.team-card h2 {
+  color: #171f29;
+  font-size: 1.32rem;
+  line-height: 1.16;
+  margin: 0;
+}
+
+.team-card p {
+  color: rgba(26, 32, 40, 0.76);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  margin: 0.55rem 0 0;
+}
+
+.scroll-meter {
+  background: rgba(255, 255, 255, 0.15);
+  bottom: 1.2rem;
+  height: 3px;
+  left: 1.2rem;
+  overflow: hidden;
+  position: absolute;
+  right: 1.2rem;
+  z-index: 8;
+}
+
+.scroll-meter__bar {
+  background: linear-gradient(90deg, #ff7a1f, #58c8df, #d9dee8);
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  width: 100%;
+}
+
+.machine-label {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0;
+  paint-order: stroke;
+  stroke: rgba(20, 14, 12, 0.34);
+  stroke-width: 5px;
+}
+
+.sketch-line {
+  fill: none;
+  stroke: rgba(255, 246, 230, 0.45);
+  stroke-dasharray: 10 12;
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.flow-arrow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 7;
+}
+
+.cool-note {
+  fill: #0e5968;
+  font-size: 32px;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+@media (min-width: 760px) {
+  .hero-title {
+    font-size: 6.4rem;
+  }
+
+  .hero-kicker {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero-copy {
+    left: 1rem;
+    right: 1rem;
+    top: 2rem;
+  }
+
+  .hero-title {
+    font-size: 3.25rem;
+  }
+
+  .hero-kicker {
+    font-size: 0.82rem;
+    max-width: 19rem;
+  }
+
+  .team-card {
+    grid-template-columns: 4.8rem minmax(0, 1fr);
+    min-height: 10rem;
+    padding: 0.85rem;
+    right: 1rem;
+    top: 16vh;
+    width: calc(100vw - 2rem);
+  }
+
+  .team-card svg {
+    height: 4.8rem;
+    width: 4.8rem;
+  }
+
+  .team-card h2 {
+    font-size: 1.05rem;
+  }
+
+  .team-card p {
+    font-size: 0.82rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .scroll-track {
+    height: auto;
+  }
+
+  .stage {
+    min-height: 100vh;
+    position: relative;
+  }
+}
