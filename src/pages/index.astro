@@ -52,6 +52,8 @@ const team = [
     bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas collaborates on SEN geometry, caster scale-up, and water-to-steel similarity."
   }
 ];
+
+const socialLinks = ["GitHub", "LinkedIn", "Scholar"];
 ---
 
 <!doctype html>
@@ -59,210 +61,85 @@ const team = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="ASPIRE Labs profile website proof of concept with scroll-driven continuous casting visuals."
-    />
-    <title>ASPIRE Labs</title>
+    <meta name="description" content="Explore continuous casting with ASPIRE Labs. From molten steel and mold flow to the finished slab." />
+    <meta name="theme-color" content="#0b1012" />
+    <title>ASPIRE Labs — The science inside steel</title>
   </head>
   <body>
+    <a class="skip-link" href="#team">Skip the casting experience</a>
+    <header class="site-header">
+      <a class="brand" href="#casting" aria-label="ASPIRE Labs home">
+        <svg viewBox="0 0 40 42" fill="none" aria-hidden="true"><path d="M3 36 19 5h4l15 31H27l-7-16-8 16Z" fill="currentColor"/><path d="m14 29 6-5 6 5-6 5Z" fill="#ff793f"/></svg>
+        <span><span class="brand-name">ASPIRE LABS</span><span class="brand-sub">Materials. Motion. Discovery.</span></span>
+      </a>
+      <nav class="header-links" aria-label="Main navigation"><a href="#casting">The process</a><a href="#team">Our people</a></nav>
+      <span class="header-note">CONTINUOUS CASTING RESEARCH</span>
+    </header>
     <main>
-      <section class="scroll-track" aria-label="ASPIRE Labs continuous casting story">
+      <section class="scroll-track" id="casting" aria-label="Interactive continuous casting story">
         <div class="stage">
-          <canvas id="flowCanvas" aria-hidden="true"></canvas>
-
-          <svg
-            class="caster-svg"
-            viewBox="0 0 1440 900"
-            preserveAspectRatio="xMidYMid slice"
-            role="img"
-            aria-label="Cartoon cross-section of a continuous casting system from tundish to mold to rollers"
-          >
-            <defs>
-              <linearGradient id="wallGrad" x1="0" x2="1">
-                <stop offset="0" stop-color="#4b4a48" />
-                <stop offset="0.45" stop-color="#9b9188" />
-                <stop offset="1" stop-color="#2c2f35" />
-              </linearGradient>
-              <linearGradient id="copperGrad" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0" stop-color="#f3a24d" />
-                <stop offset="0.52" stop-color="#b96a27" />
-                <stop offset="1" stop-color="#6f3a1c" />
-              </linearGradient>
-              <linearGradient id="steelGrad" x1="0" x2="1">
-                <stop offset="0" stop-color="#dce3ea" />
-                <stop offset="0.42" stop-color="#909ca8" />
-                <stop offset="1" stop-color="#59636f" />
-              </linearGradient>
-              <linearGradient id="waterWallGrad" x1="0" x2="1">
-                <stop offset="0" stop-color="#b8f3ff" stop-opacity="0.42" />
-                <stop offset="0.5" stop-color="#eefcff" stop-opacity="0.72" />
-                <stop offset="1" stop-color="#69bfd4" stop-opacity="0.5" />
-              </linearGradient>
-              <linearGradient id="slabGrad" x1="0" x2="1">
-                <stop offset="0" stop-color="#cfd6dc" />
-                <stop offset="0.38" stop-color="#8c98a3" />
-                <stop offset="0.68" stop-color="#eef2f5" />
-                <stop offset="1" stop-color="#6e7782" />
-              </linearGradient>
-              <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%">
-                <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#080b10" flood-opacity="0.26" />
-              </filter>
-              <marker id="arrowHot" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-                <path d="M1 1 11 6 1 11Z" fill="#ff7a1f" />
-              </marker>
-              <marker id="arrowCool" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-                <path d="M1 1 11 6 1 11Z" fill="#1aa4bd" />
-              </marker>
-              <pattern id="hatch" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-                <line x1="0" y1="0" x2="0" y2="18" stroke="rgba(255,255,255,0.18)" stroke-width="4" />
-              </pattern>
-            </defs>
-
-            <g id="machineWorld">
-              <g id="tundishScene" filter="url(#softShadow)">
-                <path
-                  d="M280 178 H1160 L1084 372 Q1073 396 1048 396 H862 L824 452 H616 L578 396 H392 Q367 396 356 372 Z"
-                  fill="#1c1b1c"
-                  fill-opacity="0.48"
-                  stroke="#f2efe7"
-                  stroke-linejoin="round"
-                  stroke-width="8"
-                />
-                <path
-                  d="M338 216 H1102 L1034 352 H836 L790 418 H650 L604 352 H406 Z"
-                  fill="#332f2f"
-                  fill-opacity="0.3"
-                  stroke="#6d6660"
-                  stroke-linejoin="round"
-                  stroke-width="6"
-                />
-                <path
-                  d="M420 382 H604 L650 448 H790 L836 382 H1020"
-                  fill="none"
-                  stroke="url(#hatch)"
-                  stroke-linecap="round"
-                  stroke-width="22"
-                />
-                <g fill="#20191a" stroke="#f3e7d1" stroke-width="5">
-                  <path d="M612 383 h54 v86 q0 18 -27 18 t-27 -18 Z" />
-                  <path d="M694 383 h54 v100 q0 20 -27 20 t-27 -20 Z" />
-                  <path d="M776 383 h54 v86 q0 18 -27 18 t-27 -18 Z" />
-                </g>
-                <path d="M676 495 H764 V668 H676 Z" fill="#2a2424" stroke="#f4ead7" stroke-width="6" />
-                <path d="M704 504 H736 V665 H704 Z" fill="rgba(255,255,255,0.1)" />
-                <path class="sketch-line" d="M394 255 C535 210 609 312 730 257 S950 210 1044 275" />
-                <text class="machine-label" x="720" y="566" fill="#fff1da" text-anchor="middle">
-                  tundish cross section
-                </text>
-              </g>
-
-              <g id="moldScene" transform="translate(0 740)" opacity="0">
-                <text class="machine-label" x="720" y="58" fill="#fff1da" text-anchor="middle">
-                  submerged entry nozzle / broad face
-                </text>
-                <path d="M454 116 H520 V804 H454 Z" fill="url(#copperGrad)" stroke="#ffe6bd" stroke-width="5" />
-                <path d="M920 116 H986 V804 H920 Z" fill="url(#copperGrad)" stroke="#ffe6bd" stroke-width="5" />
-                <path d="M520 152 H920 V798 H520 Z" fill="rgba(255,174,62,0.16)" stroke="rgba(255,239,210,0.28)" stroke-width="4" />
-                <path d="M548 168 H892 V784 H548 Z" fill="rgba(255,126,31,0.2)" />
-                <path d="M548 168 C596 256 585 615 628 784 H548 Z" fill="#d8512a" opacity="0.82" />
-                <path d="M892 168 C844 256 855 615 812 784 H892 Z" fill="#d8512a" opacity="0.82" />
-                <path d="M528 170 H912" stroke="#fff7e9" stroke-linecap="round" stroke-width="7" />
-                <path d="M684 0 H756 V372 Q756 397 720 397 Q684 397 684 372 Z" fill="#262121" stroke="#f5e8d1" stroke-width="7" />
-                <path d="M711 24 H729 V346" stroke="#ffe1ad" stroke-linecap="round" stroke-width="9" opacity="0.62" />
-                <path d="M664 332 H776 V384 H664 Z" fill="#262121" stroke="#f5e8d1" stroke-linejoin="round" stroke-width="7" />
-                <path d="M664 358 C612 362 579 386 548 432" class="flow-arrow" marker-end="url(#arrowHot)" stroke="#ff7a1f" />
-                <path d="M776 358 C828 362 861 386 892 432" class="flow-arrow" marker-end="url(#arrowHot)" stroke="#ff7a1f" />
-                <path d="M632 437 C530 498 536 606 631 655" class="flow-arrow" marker-end="url(#arrowHot)" stroke="#ff9d2f" opacity="0.9" />
-                <path d="M808 437 C910 498 904 606 809 655" class="flow-arrow" marker-end="url(#arrowHot)" stroke="#ff9d2f" opacity="0.9" />
-                <path d="M530 808 C601 845 839 845 910 808" fill="none" stroke="#f4ead7" stroke-width="6" stroke-linecap="round" />
-              </g>
-
-              <g id="waterLabScene" transform="translate(0 1480)" opacity="0">
-                <path d="M382 78 H1058 V842 H382 Z" fill="rgba(220,252,255,0.1)" stroke="#c5f6ff" stroke-width="7" />
-                <path d="M452 128 H988 V800 H452 Z" fill="url(#waterWallGrad)" stroke="#f4ffff" stroke-width="4" />
-                <path d="M684 28 H756 V382 Q756 407 720 407 Q684 407 684 382 Z" fill="#f5f8f8" stroke="#71808c" stroke-width="7" />
-                <path d="M664 344 H776 V396 H664 Z" fill="#e5eeee" stroke="#71808c" stroke-linejoin="round" stroke-width="7" />
-                <path d="M452 172 H988" stroke="#ffffff" stroke-linecap="round" stroke-width="7" />
-                <path d="M544 190 C605 275 592 608 634 798 H544 Z" fill="#79d9ec" opacity="0.6" />
-                <path d="M896 190 C835 275 848 608 806 798 H896 Z" fill="#79d9ec" opacity="0.6" />
-                <path d="M661 370 C604 390 570 424 538 480" class="flow-arrow" marker-end="url(#arrowCool)" stroke="#1aa4bd" />
-                <path d="M779 370 C836 390 870 424 902 480" class="flow-arrow" marker-end="url(#arrowCool)" stroke="#1aa4bd" />
-                <path d="M632 492 C532 560 555 664 650 704" class="flow-arrow" marker-end="url(#arrowCool)" stroke="#20b7cf" opacity="0.85" />
-                <path d="M808 492 C908 560 885 664 790 704" class="flow-arrow" marker-end="url(#arrowCool)" stroke="#20b7cf" opacity="0.85" />
-                <text class="cool-note" x="720" y="888" text-anchor="middle">water model flow similarity</text>
-              </g>
-
-              <g id="casterExit" transform="translate(0 2265)" opacity="0">
-                <text class="machine-label" x="720" y="72" fill="#eef8ff" text-anchor="middle">
-                  strand support and withdrawal
-                </text>
-                <path d="M440 268 C570 356 772 378 980 340" fill="none" stroke="#4c5967" stroke-width="46" stroke-linecap="round" opacity="0.5" />
-                <path d="M412 292 C570 388 772 410 1008 368" fill="none" stroke="#12191f" stroke-width="16" stroke-linecap="round" opacity="0.55" />
-
-                <g fill="url(#steelGrad)" stroke="#1d2730" stroke-width="5">
-                  <g transform="translate(408 224) rotate(20)">
-                    <ellipse cx="0" cy="0" rx="46" ry="19" />
-                    <path d="M-46 0 v38 c0 11 21 20 46 20 s46 -9 46 -20 V0" fill="#687684" />
-                    <ellipse cx="0" cy="38" rx="46" ry="19" fill="#9aa6b0" />
-                  </g>
-                  <g transform="translate(505 278) rotate(16)">
-                    <ellipse cx="0" cy="0" rx="46" ry="19" />
-                    <path d="M-46 0 v38 c0 11 21 20 46 20 s46 -9 46 -20 V0" fill="#687684" />
-                    <ellipse cx="0" cy="38" rx="46" ry="19" fill="#9aa6b0" />
-                  </g>
-                  <g transform="translate(614 318) rotate(9)">
-                    <ellipse cx="0" cy="0" rx="48" ry="20" />
-                    <path d="M-48 0 v40 c0 11 22 20 48 20 s48 -9 48 -20 V0" fill="#687684" />
-                    <ellipse cx="0" cy="40" rx="48" ry="20" fill="#9aa6b0" />
-                  </g>
-                  <g transform="translate(730 336) rotate(2)">
-                    <ellipse cx="0" cy="0" rx="48" ry="20" />
-                    <path d="M-48 0 v40 c0 11 22 20 48 20 s48 -9 48 -20 V0" fill="#687684" />
-                    <ellipse cx="0" cy="40" rx="48" ry="20" fill="#9aa6b0" />
-                  </g>
-                  <g transform="translate(848 328) rotate(-6)">
-                    <ellipse cx="0" cy="0" rx="48" ry="20" />
-                    <path d="M-48 0 v40 c0 11 22 20 48 20 s48 -9 48 -20 V0" fill="#687684" />
-                    <ellipse cx="0" cy="40" rx="48" ry="20" fill="#9aa6b0" />
-                  </g>
-                  <g transform="translate(964 300) rotate(-10)">
-                    <ellipse cx="0" cy="0" rx="48" ry="20" />
-                    <path d="M-48 0 v40 c0 11 22 20 48 20 s48 -9 48 -20 V0" fill="#687684" />
-                    <ellipse cx="0" cy="40" rx="48" ry="20" fill="#9aa6b0" />
-                  </g>
-                </g>
-
-                <g id="finalSlab" filter="url(#softShadow)">
-                  <path d="M448 502 L1016 348 L1195 438 L626 596 Z" fill="url(#slabGrad)" stroke="#eef6fb" stroke-linejoin="round" stroke-width="5" />
-                  <path d="M626 596 L1195 438 L1195 502 L626 660 Z" fill="#67717c" stroke="#3a4651" stroke-linejoin="round" stroke-width="4" />
-                  <path d="M448 502 L626 596 L626 660 L448 566 Z" fill="#8e99a3" stroke="#3a4651" stroke-linejoin="round" stroke-width="4" />
-                  <text
-                    x="806"
-                    y="497"
-                    fill="#26323c"
-                    font-size="58"
-                    font-weight="900"
-                    letter-spacing="0"
-                    text-anchor="middle"
-                    transform="rotate(-14 806 497) skewX(-8)"
-                  >
-                    ASPIRE Labs
-                  </text>
-                </g>
-              </g>
-            </g>
-          </svg>
-
-          <div class="hero-copy">
-            <h1 class="hero-title">ASPIRE Labs</h1>
-            <p class="hero-kicker">Continuous casting flow research</p>
+          <div class="scene-viewport" id="casting-viewport">
+            <canvas id="casting-canvas" role="img" aria-label="Three-dimensional continuous casting line with tundish, copper mold, near-wall bubble tracers, curved roller segments, safety railings and a glowing ASPIRE LABS slab."></canvas>
+            <div class="scene-fallback" role="img" aria-label="Casting process: tundish feeds a mold, the strand cools and exits onto rollers.">
+              <span>TUNDISH</span><i></i><span>COPPER MOLD</span><i></i><span>COOLING &amp; WITHDRAWAL</span><i></i><strong>ASPIRE LABS / STEEL SLAB</strong>
+              <p class="fallback-message">Preparing the casting line…</p>
+            </div>
           </div>
-
-          <aside class="team-strip" aria-label="Team biographies">
+          <div class="scene-meta"><span class="status-dot"></span> <span id="scene-view-label">01 / FRONT ELEVATION</span></div>
+          <div class="scene-number" aria-hidden="true">AS / CC—01</div>
+          <div class="story-copy">
+            <article class="story-panel" data-chapter="0">
+              <p class="eyebrow">FROM LIQUID TO POSSIBILITY</p>
+              <h1>The science<br/>inside <span class="accent">steel.</span></h1>
+              <div class="story-rule"></div>
+              <p class="story-description">Extraordinary materials begin with the flow. Step inside the continuous casting process with ASPIRE Labs.</p>
+              <p class="scroll-hint">SCROLL TO FOLLOW THE STEEL <span aria-hidden="true">↓</span></p>
+            </article>
+            <article class="story-panel" data-chapter="1" aria-hidden="true" inert>
+              <p class="eyebrow">01 / INSIDE THE MOLD</p>
+              <h2>A small flow.<br/><span class="accent">A lasting effect.</span></h2>
+              <div class="story-rule"></div>
+              <p class="story-description">Steel leaves the submerged entry nozzle and meets the narrow walls. Rising bubbles follow the wall to the surface; descending bubbles cling to the shell just below impact and disappear.</p>
+              <p class="story-index">BUBBLE CAPTURE / SECTION VIEW</p>
+            </article>
+            <article class="story-panel" data-chapter="2" aria-hidden="true" inert>
+              <p class="eyebrow">02 / SHAPING THE STRAND</p>
+              <h2>Heat gives way<br/>to <span class="accent">structure.</span></h2>
+              <div class="story-rule"></div>
+              <p class="story-description">A solid shell forms against the cooled copper mold. Supporting rolls guide the strand through the cooling zone and into the horizontal runout.</p>
+              <p class="story-index">SOLIDIFICATION / GUIDED WITHDRAWAL</p>
+            </article>
+            <article class="story-panel" data-chapter="3" aria-hidden="true" inert>
+              <p class="eyebrow">03 / THE ROLLOUT</p>
+              <h2>Research.<br/>Made <span class="accent">real.</span></h2>
+              <div class="story-rule"></div>
+              <p class="story-description">From the motion inside the mold to the slab on the roller table. A continuous journey, brought into perspective.</p>
+              <p class="story-index">ASPIRE LABS / CONTINUOUS DISCOVERY</p>
+            </article>
+          </div>
+          <p class="scene-caption"><span id="scene-detail">TUNDISH → SUBMERGED ENTRY NOZZLE</span><br/><span class="caption-muted">Illustrative process model · not to scale</span></p>
+          <div class="scene-controls">
+            <nav class="chapter-nav" aria-label="Casting chapters">
+              <button type="button" data-jump="0" aria-current="step" aria-label="Go to overview">00 <span class="chapter-name">Overview</span></button>
+              <button type="button" data-jump="0.29" aria-label="Go to mold flow">01 <span class="chapter-name">Mold flow</span></button>
+              <button type="button" data-jump="0.59" aria-label="Go to cooling">02 <span class="chapter-name">Cooling</span></button>
+              <button type="button" data-jump="0.94" aria-label="Go to rollout">03 <span class="chapter-name">Rollout</span></button>
+            </nav>
+            <button class="motion-toggle" type="button" aria-pressed="false">Pause motion <span aria-hidden="true">Ⅱ</span></button>
+          </div>
+          <div class="scroll-meter" aria-hidden="true"><div class="scroll-meter__bar"></div></div>
+        </div>
+      </section>
+      <section class="team-section" id="team" aria-labelledby="team-heading">
+        <div class="section-heading"><div><p class="eyebrow">THE PEOPLE BEHIND THE PROCESS</p><h2 id="team-heading">Curiosity drives us.</h2></div><p>Meet ASPIRE Labs.</p></div>
+        <div class="team-grid">
             {
               team.map((member, index) => (
                 <article class="team-card" data-card-index={index}>
+                  <header class="team-card__header">
+                    <h3>{member.name}</h3>
+                    <p class="team-card__role">{member.role}</p>
+                  </header>
                   <svg viewBox="0 0 120 120" role="img" aria-label={`${member.name} placeholder portrait`}>
                     <rect width="120" height="120" fill={member.hue} />
                     <circle cx="94" cy="22" r="30" fill={member.accent} opacity="0.28" />
@@ -274,342 +151,25 @@ const team = [
                     <circle cx="69" cy="48" r="3" fill="#17202a" />
                     <path d="M53 58 Q61 64 70 58" fill="none" stroke="#9c4f39" stroke-linecap="round" stroke-width="3" />
                   </svg>
-                  <div>
-                    <p class="team-card__role">{member.role}</p>
-                    <h2>{member.name}</h2>
-                    <p>{member.bio}</p>
+                  <p class="team-card__bio">{member.bio}</p>
+                  <div class="team-card__links" aria-label={`${member.name} links`}>
+                    {socialLinks.map((label) => (
+                      <a href="#" aria-label={`${member.name} ${label}`}>
+                        {label}
+                      </a>
+                    ))}
                   </div>
                 </article>
               ))
             }
-          </aside>
 
-          <div class="scroll-meter" aria-hidden="true">
-            <div class="scroll-meter__bar"></div>
-          </div>
         </div>
       </section>
     </main>
-
+    <footer><a class="brand-name" href="#casting">ASPIRE LABS</a><span>Continuous casting flow research</span><a href="#casting">Back to the process ↑</a></footer>
     <script>
-      import gsap from "gsap";
-      import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-      gsap.registerPlugin(ScrollTrigger);
-
-      type FlowParticle = {
-        x: number;
-        y: number;
-        vx: number;
-        vy: number;
-        r: number;
-        phase: number;
-      };
-
-      const root = document.documentElement;
-      const track = document.querySelector<HTMLElement>(".scroll-track");
-      const hero = document.querySelector<HTMLElement>(".hero-copy");
-      const world = document.querySelector<SVGGElement>("#machineWorld");
-      const cards = gsap.utils.toArray<HTMLElement>(".team-card");
-      const canvas = document.querySelector<HTMLCanvasElement>("#flowCanvas");
-      const meter = document.querySelector<HTMLElement>(".scroll-meter__bar");
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      if (track && hero && world && canvas && meter && !reducedMotion) {
-        const ctx = canvas.getContext("2d");
-        const state = {
-          progress: 0,
-          time: 0,
-          mouseX: window.innerWidth / 2,
-          mouseY: window.innerHeight / 2,
-          slosh: 0
-        };
-
-        const particles: FlowParticle[] = Array.from({ length: 92 }, (_, index) => ({
-          x: Math.random(),
-          y: Math.random(),
-          vx: (Math.random() - 0.5) * 0.26,
-          vy: 0.18 + Math.random() * 0.42,
-          r: 1.4 + Math.random() * 3.2,
-          phase: index * 0.41
-        }));
-
-        const resizeCanvas = () => {
-          const dpr = Math.min(window.devicePixelRatio || 1, 2);
-          const width = Math.floor(window.innerWidth * dpr);
-          const height = Math.floor(window.innerHeight * dpr);
-
-          if (canvas.width !== width || canvas.height !== height) {
-            canvas.width = width;
-            canvas.height = height;
-            canvas.style.width = `${window.innerWidth}px`;
-            canvas.style.height = `${window.innerHeight}px`;
-            ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
-          }
-        };
-
-        const smoothstep = (edge0: number, edge1: number, value: number) => {
-          const x = Math.min(Math.max((value - edge0) / (edge1 - edge0), 0), 1);
-          return x * x * (3 - 2 * x);
-        };
-
-        const sceneTransform = () => {
-          const width = window.innerWidth;
-          const height = window.innerHeight;
-          const scale = Math.max(width / 1440, height / 900);
-          const offsetX = (width - 1440 * scale) / 2;
-          const offsetY = (height - 900 * scale) / 2;
-          const worldX = Number(gsap.getProperty(world, "x")) || 0;
-          const worldY = Number(gsap.getProperty(world, "y")) || 0;
-          return {
-            scale,
-            x: (value: number) => offsetX + (value + worldX) * scale,
-            y: (value: number) => offsetY + (value + worldY) * scale
-          };
-        };
-
-        const drawTundishFluid = (context: CanvasRenderingContext2D, now: number) => {
-          const fade = 1 - smoothstep(0.11, 0.25, state.progress);
-          if (fade <= 0.01) return;
-
-          const t = sceneTransform();
-          const clip = [
-            [338, 216],
-            [1102, 216],
-            [1034, 352],
-            [836, 352],
-            [790, 418],
-            [650, 418],
-            [604, 352],
-            [406, 352]
-          ];
-          const mouseTarget = ((state.mouseX / window.innerWidth) - 0.5) * 56;
-          state.slosh += (mouseTarget - state.slosh) * 0.045;
-
-          context.save();
-          context.globalAlpha = fade;
-          context.beginPath();
-          clip.forEach(([x, y], index) => {
-            if (index === 0) context.moveTo(t.x(x), t.y(y));
-            else context.lineTo(t.x(x), t.y(y));
-          });
-          context.closePath();
-          context.clip();
-
-          const left = t.x(330);
-          const right = t.x(1110);
-          const top = t.y(260);
-          const bottom = t.y(426);
-          const gradient = context.createLinearGradient(0, top, 0, bottom);
-          gradient.addColorStop(0, "#ffe16a");
-          gradient.addColorStop(0.45, "#ff8b24");
-          gradient.addColorStop(1, "#d83e1f");
-
-          context.beginPath();
-          for (let i = 0; i <= 42; i += 1) {
-            const ratio = i / 42;
-            const x = left + (right - left) * ratio;
-            const worldWave = Math.sin(ratio * Math.PI * 5.4 + now * 0.0027) * 9;
-            const mouseWave = (ratio - 0.5) * state.slosh;
-            const y = top + (worldWave + mouseWave) * t.scale;
-            if (i === 0) context.moveTo(x, y);
-            else context.lineTo(x, y);
-          }
-          context.lineTo(right, bottom);
-          context.lineTo(left, bottom);
-          context.closePath();
-          context.fillStyle = gradient;
-          context.fill();
-
-          context.globalCompositeOperation = "screen";
-          context.strokeStyle = "rgba(255, 255, 214, 0.7)";
-          context.lineWidth = 3 * t.scale;
-          context.beginPath();
-          for (let i = 0; i <= 42; i += 1) {
-            const ratio = i / 42;
-            const x = left + (right - left) * ratio;
-            const y = top + (Math.sin(ratio * Math.PI * 5.4 + now * 0.0027) * 9 + (ratio - 0.5) * state.slosh) * t.scale;
-            if (i === 0) context.moveTo(x, y);
-            else context.lineTo(x, y);
-          }
-          context.stroke();
-          context.restore();
-
-          context.save();
-          context.globalAlpha = fade * 0.72;
-          context.strokeStyle = "#ff7a1f";
-          context.lineCap = "round";
-          context.lineWidth = Math.max(7, 11 * t.scale);
-          [
-            [638, 458, 638, 540],
-            [720, 482, 720, 660],
-            [802, 458, 802, 540]
-          ].forEach(([x1, y1, x2, y2], index) => {
-            context.beginPath();
-            context.moveTo(t.x(x1), t.y(y1));
-            const bend = Math.sin(now * 0.003 + index) * 16;
-            context.bezierCurveTo(t.x(x1 + bend), t.y(y1 + 34), t.x(x2 - bend), t.y(y2 - 32), t.x(x2), t.y(y2));
-            context.stroke();
-          });
-          context.restore();
-        };
-
-        const drawMoldFlow = (context: CanvasRenderingContext2D, now: number) => {
-          const hot = smoothstep(0.12, 0.32, state.progress) * (1 - smoothstep(0.58, 0.78, state.progress));
-          if (hot <= 0.01) return;
-
-          const t = sceneTransform();
-          const moldY = 740;
-          context.save();
-          context.globalAlpha = hot * 0.78;
-          context.lineCap = "round";
-          context.lineJoin = "round";
-          context.lineWidth = Math.max(11, 18 * t.scale);
-          context.strokeStyle = state.progress < 0.56 ? "#ff8424" : "#28b9cf";
-
-          const pulse = Math.sin(now * 0.004) * 14;
-          const paths = [
-            [720, moldY + 350, 606, moldY + 408, 564, moldY + 520, 640, moldY + 650],
-            [720, moldY + 350, 834, moldY + 408, 876, moldY + 520, 800, moldY + 650],
-            [720, moldY + 386, 670, moldY + 504, 662, moldY + 636, 720, moldY + 770],
-            [720, moldY + 386, 770, moldY + 504, 778, moldY + 636, 720, moldY + 770]
-          ];
-
-          paths.forEach(([x1, y1, cx1, cy1, cx2, cy2, x2, y2], index) => {
-            context.beginPath();
-            context.moveTo(t.x(x1), t.y(y1));
-            context.bezierCurveTo(
-              t.x(cx1 + Math.sin(index + now * 0.001) * 11),
-              t.y(cy1 + pulse),
-              t.x(cx2 - Math.cos(index + now * 0.0012) * 10),
-              t.y(cy2 - pulse),
-              t.x(x2),
-              t.y(y2)
-            );
-            context.stroke();
-          });
-          context.restore();
-        };
-
-        const drawWaterWash = (context: CanvasRenderingContext2D) => {
-          const amount = smoothstep(0.48, 0.64, state.progress) * (1 - smoothstep(0.86, 0.98, state.progress));
-          if (amount <= 0.01) return;
-
-          const height = window.innerHeight;
-          const width = window.innerWidth;
-          const washY = -height + height * 1.45 * amount;
-          const gradient = context.createLinearGradient(0, washY, 0, washY + height);
-          gradient.addColorStop(0, "rgba(226, 252, 255, 0)");
-          gradient.addColorStop(0.34, "rgba(108, 210, 229, 0.26)");
-          gradient.addColorStop(0.62, "rgba(44, 174, 201, 0.46)");
-          gradient.addColorStop(1, "rgba(237, 252, 255, 0.18)");
-
-          context.save();
-          context.fillStyle = gradient;
-          context.fillRect(0, washY, width, height * 1.1);
-          context.globalAlpha = amount * 0.5;
-          context.strokeStyle = "rgba(239, 255, 255, 0.74)";
-          context.lineWidth = 2;
-          for (let i = 0; i < 22; i += 1) {
-            const x = (i / 21) * width + Math.sin(i * 2.1 + state.time * 0.001) * 20;
-            context.beginPath();
-            context.moveTo(x, Math.max(0, washY + 30));
-            context.bezierCurveTo(x + 28, washY + height * 0.28, x - 24, washY + height * 0.62, x + 10, washY + height);
-            context.stroke();
-          }
-          context.restore();
-        };
-
-        const drawParticles = (context: CanvasRenderingContext2D, now: number) => {
-          const cool = smoothstep(0.52, 0.72, state.progress);
-          const width = window.innerWidth;
-          const height = window.innerHeight;
-
-          context.save();
-          particles.forEach((particle) => {
-            particle.y += particle.vy * (cool ? -0.18 : 0.24);
-            particle.x += particle.vx * 0.004 + Math.sin(now * 0.001 + particle.phase) * 0.0006;
-
-            if (!cool && particle.y > 1.08) particle.y = -0.06;
-            if (cool && particle.y < -0.06) particle.y = 1.08;
-            if (particle.x < -0.04) particle.x = 1.04;
-            if (particle.x > 1.04) particle.x = -0.04;
-
-            const x = particle.x * width;
-            const y = particle.y * height;
-            const r = particle.r * (cool ? 1.25 : 1);
-            context.globalAlpha = cool ? 0.22 : 0.36 * (1 - smoothstep(0.58, 0.82, state.progress));
-            context.fillStyle = cool ? "rgba(220, 252, 255, 0.82)" : "rgba(255, 174, 68, 0.88)";
-            context.beginPath();
-            context.arc(x, y, r, 0, Math.PI * 2);
-            context.fill();
-          });
-          context.restore();
-        };
-
-        const render = (now: number) => {
-          state.time = now;
-          resizeCanvas();
-          if (ctx) {
-            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-            drawWaterWash(ctx);
-            drawTundishFluid(ctx, now);
-            drawMoldFlow(ctx, now);
-            drawParticles(ctx, now);
-          }
-          window.requestAnimationFrame(render);
-        };
-
-        gsap.set(cards, { autoAlpha: 0, xPercent: 130, rotate: -2 });
-        gsap.set("#casterExit", { transformOrigin: "720px 420px", scale: 0.92 });
-        gsap.set(meter, { scaleX: 0 });
-
-        const timeline = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: {
-            trigger: track,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 0.85,
-            onUpdate: (self) => {
-              state.progress = self.progress;
-            }
-          }
-        });
-
-        timeline
-          .to(meter, { scaleX: 1, duration: 5.2 }, 0)
-          .to(hero, { autoAlpha: 0, y: -42, duration: 0.55 }, 0.14)
-          .to(world, { y: -690, duration: 1.15 }, 0)
-          .to("#moldScene", { autoAlpha: 1, duration: 0.45 }, 0.42)
-          .to(world, { y: -1400, duration: 1.05 }, 1.15)
-          .to(root, { "--thermal-mix": 1, duration: 1.05 }, 1.42)
-          .to("#waterLabScene", { autoAlpha: 1, duration: 0.5 }, 1.52)
-          .to(world, { y: -2380, duration: 1.2 }, 3.84)
-          .to("#casterExit", { autoAlpha: 1, scale: 1.04, x: 40, duration: 0.9 }, 4.08)
-          .to("#finalSlab", { x: 44, y: -18, duration: 0.65 }, 4.64);
-
-        cards.forEach((card, index) => {
-          const start = 1.62 + index * 0.31;
-          timeline
-            .to(card, { autoAlpha: 1, xPercent: 0, rotate: 0, duration: 0.12, ease: "power2.out" }, start)
-            .to(card, { xPercent: -172, autoAlpha: 0, duration: 0.17, ease: "power1.in" }, start + 0.16);
-        });
-
-        window.addEventListener("pointermove", (event) => {
-          state.mouseX = event.clientX;
-          state.mouseY = event.clientY;
-        });
-        window.addEventListener("resize", () => {
-          resizeCanvas();
-          ScrollTrigger.refresh();
-        });
-
-        resizeCanvas();
-        window.requestAnimationFrame(render);
-      } else if (reducedMotion) {
-        root.style.setProperty("--thermal-mix", "0.65");
-      }
+      import { initCastingExperience } from '../scripts/casting-scene';
+      initCastingExperience();
     </script>
   </body>
 </html>

@@ -3,3 +3,4 @@ dist/
 .astro/
 .astro-dev*.log
 .aspire-*.png
+.local-workers/

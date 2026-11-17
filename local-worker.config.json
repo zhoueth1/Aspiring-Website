@@ -1,0 +1,8 @@
+{
+  "model": "qwen3.5:9b-q4_K_M",
+  "baseUrl": "http://127.0.0.1:11434",
+  "timeoutMs": 300000,
+  "maxInputBytes": 48000,
+  "numCtx": 16384,
+  "numPredict": 4096
+}
